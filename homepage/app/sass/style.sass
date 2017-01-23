@@ -1,0 +1,265 @@
+@import 'normalize'
+@import url('https://fonts.googleapis.com/css?family=Hind:300,400|Oswald')
+
+// Colour vals
+$light-blue: #AEE7FC
+$peacock-blue: #33A1C9
+$dark-peacock: #0E2D38
+$my-grey: #353535
+$honeybee-yellow: #EBFF66
+
+// Responsive Breakpoints
+$mobile-bp: 650px
+$tablet-bp: 1024px
+$high-res-bp: 1920px
+
+// Nav widths
+$nav-height-top: 85px
+$nav-width-sidebar: 195px
+$nav-close-base-size: 35px
+
+// Skew Sizing
+$skew-height: 40px
+
+// mixins
+=hidden
+    display: none
+
+=opacity($opacity)
+  opacity: $opacity
+  $opacity-ie: $opacity * 100
+  filter: alpha(opacity=$opacity-ie) //IE8
+
+=aspect-ratio($width, $height)
+    position: relative
+
+    &:before
+        display: block
+        content: ""
+        width: 100%
+        padding-bottom: ($height/$width) * 100%
+
+    > .content
+        position: absolute
+        top: 0
+        right: 0
+        bottom: 0
+        left: 0
+
+=skew-block($before)
+    display: block
+    background: inherit
+    width: 100%
+    position: relative
+    content: ''
+    height: $skew-height
+    z-index: 1
+
+    @if $before
+        top: calc(#{$skew-height}/-2)
+        transform: skewY(-2deg)
+    @else
+        top: calc(#{$skew-height}/2)
+        transform: skewY(2deg)
+
+
+
+
+// Styling
+\:root
+    font-size: 1rem
+
+h1
+    font-family: 'Oswald', sans-serif
+    font-weight: 400
+    font-size: 6rem
+
+p
+    font-family: 'Hind', serif
+    font-weight: 300
+
+.flex-row
+    display: flex
+    flex-direction: row
+    flex-wrap: wrap
+    width: 100%
+
+main
+    margin-left: $nav-width-sidebar
+
+    @media only screen and (max-width: $mobile-bp)
+        margin-left: 0
+
+.content
+    padding: 12.5%
+
+section
+    box-sizing: border-box
+    z-index: 0
+    overflow-y: visible
+    position: relative
+
+    & > header
+        display: inline-block
+        text-align: center
+        padding: 0.25rem 1rem
+
+        & > h2
+            font-family: 'Oswald', sans-serif
+
+.skew
+    &::before
+        +skew-block(true)
+
+    &::after
+        +skew-block(false)
+
+#top-nav
+    position: fixed
+    top: 0
+    width: 100%
+    padding: 0 15px
+    height: $nav-height-top
+    display: flex
+    flex-direction: row
+    justify-content: space-between
+    align-items: center
+    background-color: white
+    z-index: 1
+    box-sizing: border-box
+
+    #top-nav-logo
+        max-width: 115px
+        max-height: 26px
+
+    #nav-open
+        font-size: 2rem
+        color: $dark-peacock
+
+    @media only screen and (min-width: $mobile-bp)
+        +hidden
+
+#nav-toggle
+    +hidden
+    &:checked + nav
+        @media only screen and (max-width: $mobile-bp)
+            left: 0
+
+    &:checked ~ #blackout
+        @media only screen and (max-width: $mobile-bp)
+            +opacity(0.9)
+
+#blackout
+    position: fixed
+    height: 100vh
+    width: 100vw
+    background-color: $dark-peacock
+    pointer-events: none
+    z-index: 2
+    transition: all 300ms ease-in-out
+    +opacity(0)
+
+nav
+    box-sizing: border-box
+    position: fixed
+    height: 100vh
+    width: $nav-width-sidebar
+    padding: 15px
+    display: flex
+    flex-direction: column
+    justify-content: center
+    font-family: 'Hind', serif
+    font-weight: 300
+    background: white
+    color: lighten($my-grey, 35%)
+    z-index: 3
+    transition: all 300ms ease-in-out
+
+    @media only screen and (max-width: $mobile-bp)
+        left: - $nav-width-sidebar - $nav-close-base-size
+
+    #nav-close
+        position: relative
+        display: block
+        height: $nav-close-base-size
+        width: $nav-close-base-size
+        left: $nav-width-sidebar - 15px  // subracts the padding of the nav element
+        top: -13px
+        background-color: white
+        border-radius: 0 2px 2px 0
+
+
+        @media only screen and (min-width: $mobile-bp)
+            +hidden
+
+
+    ul
+        list-style-type: none
+        text-align: left
+        padding-left: 0
+        font-size: 1.3rem
+        line-height: 1.3rem
+
+        li
+            padding: 2em auto
+            border-radius: 0.2em
+            transition: all 400ms ease-in-out
+
+            a
+                color: inherit
+                display: block
+                padding: 0.5em 0
+                width: 100%
+                text-decoration: none
+
+            &#side-nav-logo
+                margin-bottom: -2.5em
+
+                @media only screen and (min-width: $mobile-bp )
+                    margin-bottom: 0em
+
+            &:hover
+                color: $dark-peacock
+
+#who
+    height: 75vh
+    text-align: right
+    background: $peacock-blue fixed
+    color: white
+    display: flex
+    flex-direction: column
+    align-items: center
+    justify-content: flex-end
+
+    & > h1
+        line-height: 0.5em
+        width: 100%
+        margin: 0 auto
+
+        span
+            font-family: 'Hind', serif
+            font-size: 1.5rem
+            font-weight: 300
+
+#what
+    padding: 0
+    background-color: $my-grey
+    color: white
+
+    header
+        margin-left: 5rem
+
+    & .service
+        box-sizing: border-box
+        width: 50%
+        +aspect-ratio(1, 1)
+
+        @media only screen and (min-width: $high-res-bp)
+            width: 25%
+
+        @media only screen and (max-width: $mobile-bp)
+            width: 100%
+
+#where
+    background: url("./img/skyline.svg"),
+        lighten($my-grey, 75%)

@@ -1,0 +1,10 @@
+.DS_Store
+.python-version
+envs/
+scribbles.md
+src/factor9/settings/secrets/
+__pycache__/
+static/
+node_modules/
+/nginx-access.log
+/nginx-error.log

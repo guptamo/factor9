@@ -1,0 +1,27 @@
+version: '2'
+services:
+  db:
+    restart: unless-stopped
+    image: postgres:9.5.3
+    env_file: envs/postgresql.env
+
+  web:
+    restart: unless-stopped
+    expose:
+      - "8000"
+    build: .
+    volumes:
+      - .:/code
+    command: gunicorn --bind web:8000 factor9.wsgi:application --reload
+    links:
+      - db
+
+  nginx:
+    restart: unless-stopped
+    build: ./nginx/
+    ports:
+      - "80:80"
+    volumes_from:
+      - web:rw
+    links:
+      - web
