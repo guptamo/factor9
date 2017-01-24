@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% load wagtailcore_tags %}
+{% block body_class %}template-blogroll{% endblock %}
+
+{% block content %}
+    <h1>{{ page.title }}</h1>
+    <div>
+        {% for post in posts %}
+            {% with post=post.specific %}
+                <h2><a href="{% pageurl post %}">{{ post.title }}</a></h2>
+                <p></p>
+                <a href="{% pageurl post %}"></a>
+            {% endwith %}
+        {% endfor %}
+    </div>
+{% endblock %}

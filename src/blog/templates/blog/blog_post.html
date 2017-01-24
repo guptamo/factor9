@@ -1,0 +1,8 @@
+{% extends "base.html" %}
+{% load wagtailcore_tags  %}
+{% block body_class %}template-blogpost{% endblock %}
+
+{% block content %}
+    <h1>{{ page.title }}</h1>
+    <a href="{{ page.get_parent.url }}">Return to Blog Roll</a>
+{% endblock %}

@@ -35,7 +35,7 @@ if DEBUG == True:
 # Application definition
 
 INSTALLED_APPS = [
-    'home',
+    'blog',
     'search',
 
     'wagtail.wagtailforms',
