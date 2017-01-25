@@ -4,6 +4,7 @@ envs/
 scribbles.md
 src/factor9/settings/secrets/
 __pycache__/
+media/
 static/
 node_modules/
 */nginx-access.log

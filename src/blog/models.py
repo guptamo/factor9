@@ -1,5 +1,7 @@
 from django.db import models
 from wagtail.wagtailcore.models import Page
+from wagtail.wagtailadmin.edit_handlers import InlinePanel
+from wagtail.wagtailimages.edit_handlers import ImageChooserPanel
 
 
 class BlogRoll(Page):
@@ -11,5 +13,16 @@ class BlogRoll(Page):
         context["posts"] = posts
         return context
 
+
 class BlogPost(Page):
-    pass
+    feed_image = models.ForeignKey(
+        "wagtailimages.Image",
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name="+"
+    )
+
+    promote_panels = Page.promote_panels + [
+        ImageChooserPanel("feed_image")
+    ]

@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load wagtailcore_tags %}
+{% load wagtailcore_tags wagtailimages_tags %}
 {% block body_class %}template-blogroll{% endblock %}
 
 {% block content %}
@@ -8,6 +8,7 @@
         {% for post in posts %}
             {% with post=post.specific %}
                 <h2><a href="{% pageurl post %}">{{ post.title }}</a></h2>
+                {% image post.feed_image height-200 %}
                 <p></p>
                 <a href="{% pageurl post %}"></a>
             {% endwith %}
